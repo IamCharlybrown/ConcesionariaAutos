@@ -1,4 +1,4 @@
-package com.carlosmontero.concecionaria.models.Vehicles;
+package com.carlosmontero.concecionaria.models.Vehicles.MasterVehicleModel;
 
 import com.carlosmontero.concecionaria.utils.Availability;
 import com.carlosmontero.concecionaria.utils.IdGenerator;
@@ -164,25 +164,6 @@ public class Vehicle implements VehicleInterface {
         this.usedState = usedState;
     }
 
-    @Override
-    public Vehicle showInfo() {
-        return null;
-    }
-
-    @Override
-    public double finalPrice() {
-        return 0;
-    }
-
-    @Override
-    public String showAvailability() {
-        return "";
-    }
-
-    @Override
-    public String reserveVehicle() {
-        return "";
-    }
     @Override
     public String toString() {
         return "Vehicle{" +

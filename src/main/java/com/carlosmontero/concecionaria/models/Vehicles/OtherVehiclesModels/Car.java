@@ -1,5 +1,6 @@
-package com.carlosmontero.concecionaria.models.Vehicles;
+package com.carlosmontero.concecionaria.models.Vehicles.OtherVehiclesModels;
 
+import com.carlosmontero.concecionaria.models.Vehicles.MasterVehicleModel.Vehicle;
 import com.carlosmontero.concecionaria.utils.Availability;
 import com.carlosmontero.concecionaria.utils.UsedState;
 
