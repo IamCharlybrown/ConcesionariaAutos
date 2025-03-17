@@ -1,6 +1,6 @@
 package com.carlosmontero.concecionaria.services.OtherVehicleServices;
 
-import com.carlosmontero.concecionaria.models.Vehicles.OtherVehiclesModels.Car;
+import com.carlosmontero.concecionaria.models.OtherVehiclesModels.Car;
 import com.carlosmontero.concecionaria.services.MasterVehicleServices.VehicleServiceImpl;
 import com.carlosmontero.concecionaria.utils.Availability;
 import com.carlosmontero.concecionaria.utils.UsedState;
@@ -21,10 +21,11 @@ import java.util.stream.Collectors;
 @Service
 public class CarServices extends VehicleServiceImpl<Car> {
 
-    private final List<Car> cars = new ArrayList<>();
+    protected List<Car> cars = new ArrayList<>();
 
     public CarServices() {
-        vehicles = new ArrayList<>();
+        super();
+
         vehicles.add(new Car("Civic", "Honda", 2021, "CAML123", 20000.0, Availability.FOR_SALE, 1000, UsedState.NEW, 4));
         vehicles.add(new Car("Corolla", "Toyota", 2020, "ABC123", 25000.0, Availability.SOLD, 5000, UsedState.USED, 4));
         vehicles.add(new Car("Model 3", "Tesla", 2023, "TESL123", 45000.0, Availability.FOR_SALE, 12000, UsedState.USED, 4));
@@ -48,17 +49,30 @@ public class CarServices extends VehicleServiceImpl<Car> {
 
     }
 
+    public List<Car> getCarsByNumDoors(int numDoors) {
+        //limpiamos la lista
+        cars.clear();
+
+        for (Car car : vehicles) {
+            if (car.getNumDoors() == numDoors) {
+                cars.add(car);
+            }
+        }
+        return cars;
+    }
+
     public List<Car> searchCars(String brand, String name, Integer year,
                                 Double price, String availability, Integer milage,
                                 String usedState, Integer numDoors) {
-/**
- * ARREGLAR
- */
 
-        return super.searchVehicles(brand, name, year, price, availability, milage, usedState)
-                .stream()
+        List<Car> filteredCars = super.searchVehicles(brand, name, year, price, availability, milage, usedState);
+
+        return filteredCars.stream()
                 .filter(car -> numDoors == null || car.getNumDoors() == numDoors)
                 .collect(Collectors.toList());
+
+
     }
+
 
 }

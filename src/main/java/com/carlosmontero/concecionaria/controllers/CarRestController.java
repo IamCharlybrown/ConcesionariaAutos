@@ -1,6 +1,6 @@
 package com.carlosmontero.concecionaria.controllers;
 
-import com.carlosmontero.concecionaria.models.Vehicles.OtherVehiclesModels.Car;
+import com.carlosmontero.concecionaria.models.OtherVehiclesModels.Car;
 import com.carlosmontero.concecionaria.services.OtherVehicleServices.CarServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,14 +20,9 @@ public class CarRestController {
         return carService.getAllVehicles();
     }
 
-    @GetMapping("/{id}")
-    public Car getCarById(@PathVariable int id) {
-        return carService.getVehicleById(id);
-    }
-
-    @GetMapping("/plate/{plate}")
-    public Car getCarByPlate(@PathVariable String plate) {
-        return carService.getVehicleByPlate(plate);
+    @GetMapping("numDoors/{numDoors}")
+    public List<Car> getCarByNumDoors(@PathVariable int numDoors){
+        return carService.getCarsByNumDoors(numDoors);
     }
 
     @GetMapping("/search")

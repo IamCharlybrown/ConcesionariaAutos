@@ -1,4 +1,4 @@
-package com.carlosmontero.concecionaria.models.Vehicles.MasterVehicleModel;
+package com.carlosmontero.concecionaria.models.MasterVehicleModel;
 
 import com.carlosmontero.concecionaria.utils.Availability;
 import com.carlosmontero.concecionaria.utils.IdGenerator;

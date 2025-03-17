@@ -1,4 +1,4 @@
-package com.carlosmontero.concecionaria.models.Vehicles.MasterVehicleModel;
+package com.carlosmontero.concecionaria.models.MasterVehicleModel;
 
 import java.util.List;
 

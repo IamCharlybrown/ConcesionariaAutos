@@ -1,7 +1,7 @@
 package com.carlosmontero.concecionaria.services.MasterVehicleServices;
 
-import com.carlosmontero.concecionaria.models.Vehicles.MasterVehicleModel.VehicleInterface;
-import com.carlosmontero.concecionaria.models.Vehicles.MasterVehicleModel.Vehicle;
+import com.carlosmontero.concecionaria.models.MasterVehicleModel.VehicleInterface;
+import com.carlosmontero.concecionaria.models.MasterVehicleModel.Vehicle;
 import com.carlosmontero.concecionaria.utils.Availability;
 import com.carlosmontero.concecionaria.utils.UsedState;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public abstract class VehicleServiceImpl<T extends Vehicle> implements VehicleIn
 
     protected List<T> vehicles;
 
-    public VehicleServiceImpl(){
+    public VehicleServiceImpl() {
         vehicles = new ArrayList<>();
     }
 
@@ -53,7 +53,7 @@ public abstract class VehicleServiceImpl<T extends Vehicle> implements VehicleIn
 
 
     /**
-     * Método para buscar Vehiculos por los siguientes parámetros;
+     * Buscar Vehículos por los siguientes parámetros;
      *
      * @param brand
      * @param name
@@ -66,52 +66,19 @@ public abstract class VehicleServiceImpl<T extends Vehicle> implements VehicleIn
      */
 
 
-
     public List<T> searchVehicles(String brand, String name, Integer year, Double price,
-                                String availability, Integer milage, String usedState) {
-        return vehicles.stream().filter(v -> {
-            boolean matches = true;
+                                  String availability, Integer milage, String usedState) {
+        return vehicles.stream()
+                .filter(v -> brand == null || v.getVehicleBrand().equalsIgnoreCase(brand))
+                .filter(v -> name == null || v.getVehicleName().equalsIgnoreCase(name))
+                .filter(v -> year == null || v.getVehicleYear() == year)
+                .filter(v -> price == null || Double.compare(v.getPrice(), price) == 0)
+                .filter(v -> milage == null || v.getMilage() == milage)
+                .filter(v -> isValidAvailability(availability, v))
+                .filter(v -> isValidUsedState(usedState, v))
+                .collect(Collectors.toList());
 
-            // Filtrado por marca
-            if (brand != null && !v.getVehicleBrand().equalsIgnoreCase(brand)) {
-                matches = false;
-            }
-
-            // Filtrado por nombre
-            if (name != null && !v.getVehicleName().equalsIgnoreCase(name)) {
-                matches = false;
-            }
-
-            // Filtrado por año
-            if (year != null && v.getVehicleYear() != year) {
-                matches = false;
-            }
-
-            // Filtrado por precio
-            if (price != null && v.getPrice() != price) {
-                matches = false;
-            }
-
-            // Filtrado por disponibilidad (llamando a isValidAvailability)
-            if (!isValidAvailability(availability, v)) {
-                matches = false;
-            }
-
-            // Filtrado por kilometraje
-            if (milage != null && v.getMilage() != milage) {
-                matches = false;
-            }
-
-            // Filtrado por estado de uso (convertido a enum)
-            if (!isValidUsedState(usedState, v)) {
-                matches = false;
-            }
-
-
-            return matches;
-        }).collect(Collectors.toList());
     }
-
 
     /**
      * Metodos para validar los enums Availability y UsedState
@@ -119,23 +86,25 @@ public abstract class VehicleServiceImpl<T extends Vehicle> implements VehicleIn
      * @param availability
      * @return true
      */
-
     protected boolean isValidAvailability(String availability, T vehicle) {
-        if(availability== null){
-            return false;
+        if (availability == null) {
+            return true; // No filtrar si no se envió
         }
         try {
-            return vehicle.getAvailability() == Availability.valueOf(availability.toUpperCase().replace(" ", "_"));
+            Availability desired = Availability.valueOf(availability.toUpperCase().replace(" ", "_"));
+            return vehicle.getAvailability() == desired;
         } catch (IllegalArgumentException e) {
             return false;
         }
     }
+
     protected boolean isValidUsedState(String usedState, T vehicle) {
-        if(usedState== null){
-            return false;
+        if (usedState == null) {
+            return true;
         }
         try {
-            return vehicle.getUsedState() == UsedState.valueOf(usedState.toUpperCase());
+            UsedState desired = UsedState.valueOf(usedState.toUpperCase());
+            return vehicle.getUsedState() == desired;
         } catch (IllegalArgumentException e) {
             return false;
         }

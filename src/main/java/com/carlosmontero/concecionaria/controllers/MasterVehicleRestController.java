@@ -1,8 +1,9 @@
 package com.carlosmontero.concecionaria.controllers;
 
 
-import com.carlosmontero.concecionaria.models.Vehicles.MasterVehicleModel.Vehicle;
+import com.carlosmontero.concecionaria.models.MasterVehicleModel.Vehicle;
 import com.carlosmontero.concecionaria.services.OtherVehicleServices.CarServices;
+import com.carlosmontero.concecionaria.services.OtherVehicleServices.MotorcycleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,11 +25,15 @@ public class MasterVehicleRestController {
     @Autowired
     private CarServices carService;
 
+    @Autowired
+    private MotorcycleService motorcycleService;
+
 
     @GetMapping
     public List<Vehicle> getAllVehicles() {
         List<Vehicle> allVehicles = new ArrayList<>();
         allVehicles.addAll(carService.getAllVehicles());
+        allVehicles.addAll(motorcycleService.getAllVehicles());
         return allVehicles;
     }
 
@@ -78,4 +83,6 @@ public class MasterVehicleRestController {
         }
         return vehicles;
     }
+
+
 }
