@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Controlador API Trucks
+ */
+
 @RestController
 @RequestMapping("/Truck")
 public class TruckRestController {
