@@ -1,4 +1,4 @@
-package com.carlosmontero.concecionaria.models.Vehicles;
+package com.carlosmontero.concecionaria.models.MasterVehicleModel;
 
 public interface VehicleInterface {
     /**
@@ -18,13 +18,7 @@ public interface VehicleInterface {
      * métodos base
      */
 
-    VehicleInterface showInfo();
 
-    double finalPrice();
-
-    String showAvailability();
-
-    String reserveVehicle();
 
 
 }

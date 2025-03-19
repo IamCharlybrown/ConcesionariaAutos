@@ -1,12 +1,21 @@
-package com.carlosmontero.concecionaria.models.Vehicles;
+package com.carlosmontero.concecionaria.models.MasterVehicleModel;
 
 import com.carlosmontero.concecionaria.utils.Availability;
 import com.carlosmontero.concecionaria.utils.IdGenerator;
 import com.carlosmontero.concecionaria.utils.UsedState;
+import jakarta.persistence.*;
 
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "vehicles")
 public class Vehicle implements VehicleInterface {
 
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
+
     private String vehicleName;
     private String vehicleBrand;
     private int vehicleYear;
@@ -20,7 +29,6 @@ public class Vehicle implements VehicleInterface {
      * Constructor requerido por JPA
      */
     public Vehicle() {
-        this.Id = IdGenerator.generatedID();
     }
 
     /**
@@ -65,6 +73,7 @@ public class Vehicle implements VehicleInterface {
 
     /**
      * Constructor para coche usado / semiusado
+     *
      * @param vehicleName
      * @param vehicleBrand
      * @param vehicleYear
@@ -83,6 +92,7 @@ public class Vehicle implements VehicleInterface {
 
     /**
      * Constructor para búsqueda por marca y nombre
+     *
      * @param vehicleBrand
      * @param vehicleName
      */
@@ -94,12 +104,14 @@ public class Vehicle implements VehicleInterface {
 
     /**
      * Getters y setters
+     *
      * @return
      */
 
     public int getId() {
         return Id;
     }
+
     public String getVehicleName() {
         return vehicleName;
     }
@@ -164,25 +176,6 @@ public class Vehicle implements VehicleInterface {
         this.usedState = usedState;
     }
 
-    @Override
-    public Vehicle showInfo() {
-        return null;
-    }
-
-    @Override
-    public double finalPrice() {
-        return 0;
-    }
-
-    @Override
-    public String showAvailability() {
-        return "";
-    }
-
-    @Override
-    public String reserveVehicle() {
-        return "";
-    }
     @Override
     public String toString() {
         return "Vehicle{" +
