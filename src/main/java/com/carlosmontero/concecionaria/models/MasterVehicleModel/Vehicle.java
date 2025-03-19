@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "vehicles")
 public class Vehicle implements VehicleInterface {
 
@@ -28,7 +29,6 @@ public class Vehicle implements VehicleInterface {
      * Constructor requerido por JPA
      */
     public Vehicle() {
-        this.Id = IdGenerator.generatedID();
     }
 
     /**

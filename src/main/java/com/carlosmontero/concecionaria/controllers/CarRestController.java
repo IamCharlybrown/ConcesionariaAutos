@@ -17,7 +17,13 @@ public class CarRestController {
 
     @GetMapping
     public List<Car> getCars() {
-        return carService.getAllVehicles();
+        return carService.findAll();
+    }
+
+    @PostMapping("/add")
+    public List<Car> addCars() {
+        carService.addCars();
+        return carService.findAll();
     }
 
     @GetMapping("numDoors/{numDoors}")

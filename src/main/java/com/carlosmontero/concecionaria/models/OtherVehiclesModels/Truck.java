@@ -3,12 +3,21 @@ package com.carlosmontero.concecionaria.models.OtherVehiclesModels;
 import com.carlosmontero.concecionaria.models.MasterVehicleModel.Vehicle;
 import com.carlosmontero.concecionaria.utils.Availability;
 import com.carlosmontero.concecionaria.utils.UsedState;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "trucks")
 public class Truck extends Vehicle {
 
+    @Column(name = "loadCapacity")
     private int loadCapacity;
+    @Column(name = "numberOfAxles")
     private int numberOfAxles;
+    @Column(name = "specialPermitRequired")
     private boolean specialPermitRequired;
+    @Column(name = "hasTowingSystem")
     private boolean hasTowingSystem;
 
 

@@ -1,24 +1,26 @@
 package com.carlosmontero.concecionaria.repository;
 
 import com.carlosmontero.concecionaria.models.MasterVehicleModel.Vehicle;
+import com.carlosmontero.concecionaria.utils.Availability;
+import com.carlosmontero.concecionaria.utils.UsedState;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.NoRepositoryBean;
+
 
 import java.util.List;
 
 
-@Repository
-public interface VehicleRepository extends JpaRepository<Vehicle,Integer> {
+@NoRepositoryBean
+public interface VehicleRepository<T extends Vehicle> extends JpaRepository<T, Long> {
 
 
-    // Spring Data automáticamente implementa métodos como:
-    // findAll(), findById(), save(), deleteById(), etc.
+    T findByPlateIgnoreCase(String plate);
 
-    // Puedes agregar métodos personalizados:
-    List<Vehicle> findByPlateIgnoreCase(String plate);
-    List<Vehicle> findByVehicleBrandIgnoreCase(String brand);
-    List<Vehicle> findByVehicleNameIgnoreCase(String name);
+    List<T> findByVehicleBrandIgnoreCase(String brand);
+    List<T> findByVehicleNameIgnoreCase(String name);
+    List<T> findByAvailability(Availability availability);
+    List<T> findByUsedState(UsedState usedState);
 
     // También soporta combinaciones
-    List<Vehicle> findByVehicleBrandAndVehicleYear(String brand, int year);
+    List<T> findByVehicleBrandAndVehicleYear(String brand, int year);
 }

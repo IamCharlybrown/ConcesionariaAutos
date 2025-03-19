@@ -6,10 +6,12 @@ import com.carlosmontero.concecionaria.repository.VehicleRepository;
 import com.carlosmontero.concecionaria.utils.Availability;
 import com.carlosmontero.concecionaria.utils.UsedState;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -21,98 +23,48 @@ import java.util.stream.Collectors;
  */
 
 @Service
-public abstract class VehicleServiceImpl<T extends Vehicle> implements VehicleInterface {
+public abstract class VehicleServiceImpl<T extends Vehicle, R extends VehicleRepository> implements VehicleInterface {
 
 
-    @Autowired
-    VehicleRepository vehicleRepository;
+    protected R repository;
 
-    protected List<T> vehicles;
-
-    public VehicleServiceImpl() {
-        vehicles = new ArrayList<>();
+    public VehicleServiceImpl(R repository) {
+        this.repository = repository;
     }
 
-    public VehicleServiceImpl(List<T> vehicles) {
-        this.vehicles = vehicles;
+    public List<T> findAll() {
+        return repository.findAll();
     }
 
-
-    public List<T> getAllVehicles() {
-        return vehicles;
+    public void saveVehicle(T vehicle) {
+        repository.save(vehicle);
     }
 
+    public void deleteVehicle(Long id) {
+        repository.deleteById(id);
+    }
 
-    public T getVehicleById(int id) {
-        return vehicles.stream()
-                .filter(v -> v.getId() == id)
-                .findFirst()
-                .orElse(null);
+    public Optional<T> findVehicleById(Long id) {
+        return repository.findById(id);
     }
 
     public T getVehicleByPlate(String plate) {
-        return vehicles.stream()
-                .filter(v -> v.getPlate().equalsIgnoreCase(plate))
-                .findFirst()
-                .orElse(null);
+        return (T) repository.findByPlateIgnoreCase(plate);
     }
-
-
-    /**
-     * Buscar Vehículos por los siguientes parámetros;
-     *
-     * @param brand
-     * @param name
-     * @param year
-     * @param price
-     * @param availability
-     * @param milage
-     * @param usedState
-     * @return
-     */
-
 
     public List<T> searchVehicles(String brand, String name, Integer year, Double price,
-                                  String availability, Integer milage, String usedState) {
+                                        String availability, Integer milage, String usedState) {
+        List<Vehicle> vehicles = repository.findAll();
+
+        // Aplicas los filtros (lógica personalizada)
         return vehicles.stream()
-                .filter(v -> brand == null || v.getVehicleBrand().equalsIgnoreCase(brand))
-                .filter(v -> name == null || v.getVehicleName().equalsIgnoreCase(name))
-                .filter(v -> year == null || v.getVehicleYear() == year)
-                .filter(v -> price == null || Double.compare(v.getPrice(), price) == 0)
-                .filter(v -> milage == null || v.getMilage() == milage)
-                .filter(v -> isValidAvailability(availability, v))
-                .filter(v -> isValidUsedState(usedState, v))
+                .filter(t -> brand == null || t.getVehicleBrand().equalsIgnoreCase(brand))
+                .filter(t -> name == null || t.getVehicleName().equalsIgnoreCase(name))
+                .filter(t -> year == null || t.getVehicleYear() == year)
+                .filter(t -> price == null || Double.compare(t.getPrice(), price) == 0)
+                .filter(t -> milage == null || t.getMilage() == milage)
+                .map(vehicle -> (T) vehicle)
                 .collect(Collectors.toList());
-
-    }
-
-    /**
-     * Metodos para validar los enums Availability y UsedState
-     *
-     * @param availability
-     * @return true
-     */
-    protected boolean isValidAvailability(String availability, T vehicle) {
-        if (availability == null) {
-            return true; // No filtrar si no se envió
-        }
-        try {
-            Availability desired = Availability.valueOf(availability.toUpperCase().replace(" ", "_"));
-            return vehicle.getAvailability() == desired;
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
-    }
-
-    protected boolean isValidUsedState(String usedState, T vehicle) {
-        if (usedState == null) {
-            return true;
-        }
-        try {
-            UsedState desired = UsedState.valueOf(usedState.toUpperCase());
-            return vehicle.getUsedState() == desired;
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
     }
 }
+

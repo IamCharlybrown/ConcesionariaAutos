@@ -3,12 +3,23 @@ package com.carlosmontero.concecionaria.models.OtherVehiclesModels;
 import com.carlosmontero.concecionaria.models.MasterVehicleModel.Vehicle;
 import com.carlosmontero.concecionaria.utils.Availability;
 import com.carlosmontero.concecionaria.utils.UsedState;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "cars")
 public class Car extends Vehicle {
 
+    @Column(name = "num_doors")
     private int numDoors;
 
+    public Car(){
+        super();
+    }
+
     public Car(int numDoors) {
+        super();
         this.numDoors= numDoors;
     }
 

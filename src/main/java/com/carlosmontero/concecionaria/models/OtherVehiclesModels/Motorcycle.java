@@ -4,40 +4,59 @@ import com.carlosmontero.concecionaria.models.MasterVehicleModel.Vehicle;
 import com.carlosmontero.concecionaria.utils.Availability;
 import com.carlosmontero.concecionaria.utils.MotorcycleType;
 import com.carlosmontero.concecionaria.utils.UsedState;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "motorcycles")
 public class Motorcycle extends Vehicle {
 
-    MotorcycleType MotorcycleType;
+    @Column(name = "motorcyle_type")
+    private MotorcycleType motorcycleType;
+
+    public Motorcycle(){
+        super();
+    }
 
     public Motorcycle(MotorcycleType MotorcycleType) {
-        this.MotorcycleType = MotorcycleType;
+        super();
+        this.motorcycleType = MotorcycleType;
     }
 
-    public Motorcycle(String vehicleName, String vehicleBrand, int vehicleYear, String plate, double price, Availability availability, int milage, UsedState usedState,  MotorcycleType MotorcycleType) {
+
+    public Motorcycle(String vehicleName, String vehicleBrand, int vehicleYear, String plate,
+                      double price, Availability availability, int milage, UsedState usedState,
+                      MotorcycleType MotorcycleType) {
+
         super(vehicleName, vehicleBrand, vehicleYear, plate, price, availability, milage, usedState);
-        this.MotorcycleType = MotorcycleType;
+        this.motorcycleType = MotorcycleType;
     }
 
-    public Motorcycle(String vehicleName, String vehicleBrand, int vehicleYear, MotorcycleType MotorcycleType) {
+    public Motorcycle(String vehicleName, String vehicleBrand, int vehicleYear,
+                      MotorcycleType MotorcycleType) {
+
         super(vehicleName, vehicleBrand, vehicleYear);
-        this.MotorcycleType = MotorcycleType;
+        this.motorcycleType = MotorcycleType;
     }
 
-    public Motorcycle(String vehicleName, String vehicleBrand, int vehicleYear, int milage, UsedState usedState, MotorcycleType MotorcycleType) {
+    public Motorcycle(String vehicleName, String vehicleBrand, int vehicleYear,
+                      int milage, UsedState usedState, MotorcycleType MotorcycleType) {
+
         super(vehicleName, vehicleBrand, vehicleYear, milage, usedState);
-        this.MotorcycleType = MotorcycleType;
+        this.motorcycleType = MotorcycleType;
     }
 
     public Motorcycle(String vehicleBrand, String vehicleName, MotorcycleType MotorcycleType) {
         super(vehicleBrand, vehicleName);
-        this.MotorcycleType = MotorcycleType;
+        this.motorcycleType = MotorcycleType;
     }
 
     public String getMotorcycleType() {
-        return MotorcycleType.toString();
+        return motorcycleType.toString();
     }
 
     public void setMotorcycleType(String MotorcycleType) {
-        MotorcycleType = this.MotorcycleType.toString();
+        MotorcycleType = this.motorcycleType.toString();
     }
 }
