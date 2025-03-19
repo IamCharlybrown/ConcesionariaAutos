@@ -2,8 +2,10 @@ package com.carlosmontero.concecionaria.services.MasterVehicleServices;
 
 import com.carlosmontero.concecionaria.models.MasterVehicleModel.VehicleInterface;
 import com.carlosmontero.concecionaria.models.MasterVehicleModel.Vehicle;
+import com.carlosmontero.concecionaria.repository.VehicleRepository;
 import com.carlosmontero.concecionaria.utils.Availability;
 import com.carlosmontero.concecionaria.utils.UsedState;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,12 +16,16 @@ import java.util.stream.Collectors;
 /**
  * Clase base para métodos comunes entre todos los tipos de vehículos
  * donde T es Type o "tipo" de vehículo
+ *
  * @param <T>
  */
 
 @Service
 public abstract class VehicleServiceImpl<T extends Vehicle> implements VehicleInterface {
 
+
+    @Autowired
+    VehicleRepository vehicleRepository;
 
     protected List<T> vehicles;
 
