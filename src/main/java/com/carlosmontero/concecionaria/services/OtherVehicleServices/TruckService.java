@@ -5,10 +5,12 @@ import com.carlosmontero.concecionaria.repository.TruckRepository;
 import com.carlosmontero.concecionaria.services.AbstractVehicleServices.VehicleServiceImpl;
 
 import jakarta.transaction.Transactional;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -86,6 +88,13 @@ public class TruckService extends VehicleServiceImpl<Truck, TruckRepository> {
 
     public Truck createTruck(Truck truck){
         return truckRepository.save(truck);
+    }
+
+    public Optional<Truck> updateTruck(Long id, Truck updatedData){
+        return truckRepository.findById(id).map(truck -> {
+            BeanUtils.copyProperties(updatedData,truck,"id");
+            return truckRepository.save(truck);
+        });
     }
 }
 

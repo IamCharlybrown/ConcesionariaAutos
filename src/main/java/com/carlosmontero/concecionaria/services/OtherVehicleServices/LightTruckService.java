@@ -5,9 +5,12 @@ import com.carlosmontero.concecionaria.repository.LightTruckRepository;
 import com.carlosmontero.concecionaria.services.AbstractVehicleServices.VehicleServiceImpl;
 import com.carlosmontero.concecionaria.utils.enums.UsedState;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.beans.BeanProperty;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,4 +38,10 @@ public class LightTruckService extends VehicleServiceImpl<LightTruck, LightTruck
         return lightTruckRepository.save(lightTruck);
     }
 
+    public Optional<LightTruck> updateTruck(Long id, LightTruck updatedData){
+       return lightTruckRepository.findById(id).map(lightTruck -> {
+            BeanUtils.copyProperties(updatedData,lightTruck,"id");
+            return lightTruckRepository.save(lightTruck);
+        });
+    }
 }

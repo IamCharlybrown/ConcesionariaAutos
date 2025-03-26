@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/Motorcycles")
@@ -48,6 +49,12 @@ public class MotorcycleRestController {
         motorcycleService.createMotorcycle(motorcycle);
 
         return ResponseEntity.ok(motorcycle);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Motorcycle> updateMotorcycle(@PathVariable Long id, @RequestBody Motorcycle motorcycle){
+        Optional<Motorcycle> modifiedMotorcycle = motorcycleService.updateMotorcycle(id, motorcycle);
+        return ResponseEntity.of(modifiedMotorcycle);
     }
 
 }

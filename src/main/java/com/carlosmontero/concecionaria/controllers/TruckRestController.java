@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Controlador API Trucks
@@ -54,4 +55,13 @@ public class TruckRestController {
         truckServices.createTruck(truck);
         return ResponseEntity.ok(truck);
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Truck> updateTruck(@PathVariable Long id, @RequestBody Truck truck){
+
+        Optional<Truck> modifiedTruck = truckServices.updateTruck(id,truck);
+
+        return ResponseEntity.of(modifiedTruck);
+    }
+
 }

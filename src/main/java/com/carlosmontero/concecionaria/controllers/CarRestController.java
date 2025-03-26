@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -22,11 +23,6 @@ public class CarRestController {
         return carService.findAll();
     }
 
-    @PostMapping
-    public ResponseEntity<Car> createCar(@RequestBody Car car) {
-        Car newCar = carService.createCar(car);
-        return ResponseEntity.ok(newCar);
-    }
 
     @GetMapping("numDoors/{numDoors}")
     public List<Car> getCarByNumDoors(@PathVariable int numDoors){
@@ -48,5 +44,16 @@ public class CarRestController {
                 (brand, name, year, price, availability, milage, usedState, numDoors);
     }
 
+    @PostMapping
+    public ResponseEntity<Car> createCar(@RequestBody Car car) {
+        Car newCar = carService.createCar(car);
+        return ResponseEntity.ok(newCar);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Car> modifyCar(@PathVariable Long id, @RequestBody Car car){
+        Optional<Car> modifiedCar = carService.updateCar(id,car);
+        return ResponseEntity.of(modifiedCar);
+    }
 
 }

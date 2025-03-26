@@ -5,10 +5,12 @@ import com.carlosmontero.concecionaria.repository.CarRepository;
 import com.carlosmontero.concecionaria.services.AbstractVehicleServices.VehicleServiceImpl;
 import jakarta.transaction.Transactional;
 import org.checkerframework.checker.units.qual.C;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -37,9 +39,6 @@ public class CarServices extends VehicleServiceImpl<Car, CarRepository> {
                 .collect(Collectors.toList());
     }
 
-    public Car createCar(Car car){
-        return carRepository.save(car);
-    }
 
     public List<Car> searchCars(String brand, String name, Integer year,
                                 Double price, String availability, Integer milage,
@@ -51,5 +50,29 @@ public class CarServices extends VehicleServiceImpl<Car, CarRepository> {
                 .filter(car -> numDoors == null || car.getNumDoors() == numDoors)
                 .collect(Collectors.toList());
     }
+
+    /**
+     * Metodo para crear un nuevo carro
+     * @param car carro a crear
+     * @return car
+     */
+    public Car createCar(Car car){
+        return carRepository.save(car);
+    }
+
+    /**
+     * Metodo para modificar un carro
+     * @param id carro a modificar
+     * @param updatedData objeto de carro modificado
+     * @return carro módificado
+     */
+
+    public Optional<Car> updateCar(Long id, Car updatedData) {
+        return carRepository.findById(id).map(car -> {
+            BeanUtils.copyProperties(updatedData, car, "id");
+            return carRepository.save(car);
+        });
+    }
+
 
 }

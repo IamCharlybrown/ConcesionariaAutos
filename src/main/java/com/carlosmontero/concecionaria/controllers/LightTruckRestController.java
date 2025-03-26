@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/LightTruck")
@@ -28,6 +29,12 @@ public class LightTruckRestController {
     @PostMapping
     public ResponseEntity<LightTruck> createLightTruck(@RequestBody LightTruck lightTruck){
         return ResponseEntity.ok(lightTruckService.createLightTruck(lightTruck));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<LightTruck> updateLightTruck(@PathVariable Long id,@RequestBody LightTruck lightTruck){
+       Optional<LightTruck> modifiedLightTruck = lightTruckService.updateTruck(id,lightTruck);
+       return ResponseEntity.of(modifiedLightTruck);
     }
 
 }

@@ -4,10 +4,12 @@ import com.carlosmontero.concecionaria.models.OtherVehiclesModels.Motorcycle;
 import com.carlosmontero.concecionaria.repository.MotorcycleRepository;
 import com.carlosmontero.concecionaria.services.AbstractVehicleServices.VehicleServiceImpl;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -65,5 +67,12 @@ public class MotorcycleService extends VehicleServiceImpl<Motorcycle, Motorcycle
         }
 
         return filteredList;
+    }
+
+    public Optional<Motorcycle> updateMotorcycle(Long id, Motorcycle updatedData){
+        return motorcycleRepository.findById(id).map(motorcycle -> {
+            BeanUtils.copyProperties(updatedData,motorcycle,"id");
+            return motorcycleRepository.save(motorcycle);
+        });
     }
 }
