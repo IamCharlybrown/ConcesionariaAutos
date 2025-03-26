@@ -1,18 +1,27 @@
 package com.carlosmontero.concecionaria.models.OtherVehiclesModels;
 
 import com.carlosmontero.concecionaria.models.MasterVehicleModel.Vehicle;
-import com.carlosmontero.concecionaria.utils.Availability;
-import com.carlosmontero.concecionaria.utils.UsedState;
+import com.carlosmontero.concecionaria.utils.enums.Availability;
+import com.carlosmontero.concecionaria.utils.enums.UsedState;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 @Table(name = "cars")
 public class Car extends Vehicle {
 
+
     @Column(name = "num_doors")
+
+    @Positive(message = "El valor debe ser positivo")
     private int numDoors;
+
+    /**
+     * Constructores para cada tipo de uso
+     */
 
     public Car(){
         super();
@@ -42,6 +51,11 @@ public class Car extends Vehicle {
         super(vehicleBrand, vehicleName);
         this.numDoors = numDoors;
     }
+
+    /**
+     * Getters y Setters
+     * @return
+     */
 
     public int getNumDoors() {
         return numDoors;

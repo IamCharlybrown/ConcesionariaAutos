@@ -2,10 +2,9 @@ package com.carlosmontero.concecionaria.services.OtherVehicleServices;
 
 import com.carlosmontero.concecionaria.models.OtherVehiclesModels.Car;
 import com.carlosmontero.concecionaria.repository.CarRepository;
-import com.carlosmontero.concecionaria.services.MasterVehicleServices.VehicleServiceImpl;
-import com.carlosmontero.concecionaria.utils.Availability;
-import com.carlosmontero.concecionaria.utils.UsedState;
+import com.carlosmontero.concecionaria.services.AbstractVehicleServices.VehicleServiceImpl;
 import jakarta.transaction.Transactional;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -36,6 +35,10 @@ public class CarServices extends VehicleServiceImpl<Car, CarRepository> {
         return allCars.stream()
                 .filter(car -> car.getNumDoors() == numDoors)
                 .collect(Collectors.toList());
+    }
+
+    public Car createCar(Car car){
+        return carRepository.save(car);
     }
 
     public List<Car> searchCars(String brand, String name, Integer year,

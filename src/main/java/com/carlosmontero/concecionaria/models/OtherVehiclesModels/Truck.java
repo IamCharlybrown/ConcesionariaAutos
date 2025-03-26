@@ -1,25 +1,34 @@
 package com.carlosmontero.concecionaria.models.OtherVehiclesModels;
 
 import com.carlosmontero.concecionaria.models.MasterVehicleModel.Vehicle;
-import com.carlosmontero.concecionaria.utils.Availability;
-import com.carlosmontero.concecionaria.utils.UsedState;
+import com.carlosmontero.concecionaria.utils.enums.Availability;
+import com.carlosmontero.concecionaria.utils.enums.UsedState;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 @Table(name = "trucks")
 public class Truck extends Vehicle {
 
     @Column(name = "loadCapacity")
+    @Positive(message = "La capacidad de carga debe ser mayor a 0")
     private int loadCapacity;
+
     @Column(name = "numberOfAxles")
+    @Min(2)
     private int numberOfAxles;
+
     @Column(name = "specialPermitRequired")
     private boolean specialPermitRequired;
     @Column(name = "hasTowingSystem")
     private boolean hasTowingSystem;
 
+    /**
+     * Constructores necesarios para cada caso de uso
+     */
 
     public Truck() {
         super();
@@ -82,6 +91,12 @@ public class Truck extends Vehicle {
         this.hasTowingSystem = hasTowingSystem;
 
     }
+
+
+    /**
+     * Getters y setter
+     * @return int
+     */
 
     public int getLoadCapacity() {
         return loadCapacity;

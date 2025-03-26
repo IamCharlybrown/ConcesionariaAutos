@@ -1,15 +1,9 @@
-package com.carlosmontero.concecionaria.services.MasterVehicleServices;
+package com.carlosmontero.concecionaria.services.AbstractVehicleServices;
 
-import com.carlosmontero.concecionaria.models.MasterVehicleModel.VehicleInterface;
 import com.carlosmontero.concecionaria.models.MasterVehicleModel.Vehicle;
 import com.carlosmontero.concecionaria.repository.VehicleRepository;
-import com.carlosmontero.concecionaria.utils.Availability;
-import com.carlosmontero.concecionaria.utils.UsedState;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,7 +17,7 @@ import java.util.stream.Collectors;
  */
 
 @Service
-public abstract class VehicleServiceImpl<T extends Vehicle, R extends VehicleRepository> implements VehicleInterface {
+public abstract class VehicleServiceImpl<T extends Vehicle, R extends VehicleRepository> {
 
 
     protected R repository;

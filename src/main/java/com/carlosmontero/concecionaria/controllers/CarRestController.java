@@ -1,8 +1,10 @@
 package com.carlosmontero.concecionaria.controllers;
 
+import com.carlosmontero.concecionaria.models.MasterVehicleModel.Vehicle;
 import com.carlosmontero.concecionaria.models.OtherVehiclesModels.Car;
 import com.carlosmontero.concecionaria.services.OtherVehicleServices.CarServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,10 +22,10 @@ public class CarRestController {
         return carService.findAll();
     }
 
-    @PostMapping("/add")
-    public List<Car> addCars() {
-        carService.addCars();
-        return carService.findAll();
+    @PostMapping
+    public ResponseEntity<Car> createCar(@RequestBody Car car) {
+        Car newCar = carService.createCar(car);
+        return ResponseEntity.ok(newCar);
     }
 
     @GetMapping("numDoors/{numDoors}")
@@ -45,4 +47,6 @@ public class CarRestController {
         return carService.searchCars
                 (brand, name, year, price, availability, milage, usedState, numDoors);
     }
+
+
 }

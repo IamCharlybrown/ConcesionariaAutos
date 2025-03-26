@@ -1,9 +1,10 @@
 package com.carlosmontero.concecionaria.models.MasterVehicleModel;
 
-import com.carlosmontero.concecionaria.utils.Availability;
-import com.carlosmontero.concecionaria.utils.IdGenerator;
-import com.carlosmontero.concecionaria.utils.UsedState;
+import com.carlosmontero.concecionaria.utils.enums.Availability;
+
+import com.carlosmontero.concecionaria.utils.enums.UsedState;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 
 @Entity
@@ -11,18 +12,32 @@ import jakarta.persistence.*;
 @Table(name = "vehicles")
 public class Vehicle implements VehicleInterface {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
 
+    @NotBlank(message = "El nombre del vehículo es obligatorio")
     private String vehicleName;
+
+    @NotBlank(message = "La marca del vehículo es obligatoria")
     private String vehicleBrand;
+
+    @NotNull(message = "El año del vehículo es obligatorio")
+    @Positive
     private int vehicleYear;
+
+    @Pattern(regexp = "[A-Z]{3}-\\d{3}", message = "Las placas deben tener el formato ABC-123")
     private String plate;
+
+
+//    @Positive(message = "EL precio debe ser positivo")
     private double price;
+
     private Availability availability;
+
+//    @Positive(message = "La cantidad de kilómetros debe ser positiva")
     private int milage;
+
     private UsedState usedState;
 
     /**

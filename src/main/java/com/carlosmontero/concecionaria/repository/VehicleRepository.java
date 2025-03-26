@@ -1,8 +1,8 @@
 package com.carlosmontero.concecionaria.repository;
 
 import com.carlosmontero.concecionaria.models.MasterVehicleModel.Vehicle;
-import com.carlosmontero.concecionaria.utils.Availability;
-import com.carlosmontero.concecionaria.utils.UsedState;
+import com.carlosmontero.concecionaria.utils.enums.Availability;
+import com.carlosmontero.concecionaria.utils.enums.UsedState;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 

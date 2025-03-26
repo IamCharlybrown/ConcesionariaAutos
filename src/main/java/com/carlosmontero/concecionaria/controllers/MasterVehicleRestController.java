@@ -2,14 +2,11 @@ package com.carlosmontero.concecionaria.controllers;
 
 
 import com.carlosmontero.concecionaria.models.MasterVehicleModel.Vehicle;
-import com.carlosmontero.concecionaria.services.OtherVehicleServices.CarServices;
-import com.carlosmontero.concecionaria.services.OtherVehicleServices.MotorcycleService;
-import com.carlosmontero.concecionaria.services.OtherVehicleServices.TruckServices;
+import com.carlosmontero.concecionaria.services.OtherVehicleServices.MasterVehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,95 +22,65 @@ import java.util.List;
 public class MasterVehicleRestController {
 
     @Autowired
-    private CarServices carService;
-
-    @Autowired
-    private MotorcycleService motorcycleService;
-
-    @Autowired
-    private TruckServices truckServices;
-
+    MasterVehicleService masterVehicleService;
 
     @GetMapping
-    public List<Vehicle> getAllVehicles() {
-        List<Vehicle> allVehicles = new ArrayList<>();
-        allVehicles.addAll(carService.findAll());
-        allVehicles.addAll(motorcycleService.findAll());
-        allVehicles.addAll(truckServices.findAll());
-        return allVehicles;
+    public List<Vehicle> AllVehicles() {
+        return masterVehicleService.getAllVehicles();
     }
 
     /**
      * BUSCAR VEHÍCULO POR ID
+     *
      * @param Id
      * @return
      */
 
     @GetMapping("/{Id}")
     public Vehicle getVehicleById(@PathVariable int Id) {
-        for (Vehicle v : getAllVehicles()) {
-            if (v.getId() == Id) {
-                return v;
-            }
-
-        }
-        return null;
+        return masterVehicleService.getVehicleById(Id);
 
     }
 
-
     /**
      * BUSCAR VEHÍCULO POR PLACA
+     *
      * @param plate
      * @return
      */
+
     @GetMapping("/plate/{plate}")
     public Vehicle getVehicleByPlate(@PathVariable String plate) {
-        for (Vehicle v : getAllVehicles()) {
-            if (v.getPlate().equalsIgnoreCase(plate)) {
-                return v;
-            }
-
-        }
-        return null;
+        return masterVehicleService.getVehicleByPlate(plate);
     }
 
     /**
      * BUSCAR VEHÍCULO POR DISPONIBILIDAD
+     *
      * @param availability
      * @return
      */
 
     @GetMapping("/search/{availability}")
     public List<Vehicle> getVehicleByAvailability(@PathVariable String availability) {
-        List<Vehicle> vehicles = new ArrayList<>();
-        for (Vehicle v : getAllVehicles()) {
-            if (v.getAvailability().toString().equalsIgnoreCase(availability)) {
-                vehicles.add(v);
-            }
-        }
-        return vehicles;
-
+        return masterVehicleService.getVehicleByAvailability(availability);
     }
 
     /**
      * BUSCAR VEHÍCULOS POR USO
+     *
      * @param useState
      * @return
      */
+
     @GetMapping("/search/useState/{useState}")
     public List<Vehicle> getVehiclesByUseState(@PathVariable String useState) {
-        List<Vehicle> vehicles = new ArrayList<>();
-        for (Vehicle v : getAllVehicles()) {
-            if (v.getUsedState().toString().equalsIgnoreCase(useState)) {
-                vehicles.add(v);
-            }
-        }
-        return vehicles;
+        return masterVehicleService.getVehiclesByUseState(useState);
     }
 
     /**
      * prueba para agregar listas de vehículos
+     *
      * @return
      */
 
@@ -121,5 +88,6 @@ public class MasterVehicleRestController {
     public ResponseEntity<String> addVehicles() {
         return ResponseEntity.ok("Vehicles added successfully");
     }
+
 
 }

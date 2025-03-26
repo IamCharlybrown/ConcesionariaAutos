@@ -1,15 +1,8 @@
 package com.carlosmontero.concecionaria.services.OtherVehicleServices;
 
-import com.carlosmontero.concecionaria.models.MasterVehicleModel.Vehicle;
-import com.carlosmontero.concecionaria.models.OtherVehiclesModels.Car;
 import com.carlosmontero.concecionaria.models.OtherVehiclesModels.Motorcycle;
-import com.carlosmontero.concecionaria.repository.CarRepository;
 import com.carlosmontero.concecionaria.repository.MotorcycleRepository;
-import com.carlosmontero.concecionaria.repository.VehicleRepository;
-import com.carlosmontero.concecionaria.services.MasterVehicleServices.VehicleServiceImpl;
-import com.carlosmontero.concecionaria.utils.Availability;
-import com.carlosmontero.concecionaria.utils.MotorcycleType;
-import com.carlosmontero.concecionaria.utils.UsedState;
+import com.carlosmontero.concecionaria.services.AbstractVehicleServices.VehicleServiceImpl;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -28,12 +21,14 @@ public class MotorcycleService extends VehicleServiceImpl<Motorcycle, Motorcycle
         this.motorcycleRepository = motorcycleRepository;
 
     }
+
     @Transactional
-    public void addMotorcycles(){
+    public void addMotorcycles() {
         List<Motorcycle> vehicles = new ArrayList<>();
 
     }
 //    }
+
     /**
      * Servicio para retornar tipo de motos
      *
@@ -50,13 +45,25 @@ public class MotorcycleService extends VehicleServiceImpl<Motorcycle, Motorcycle
                 .collect(Collectors.toList());
     }
 
+
+    public Motorcycle createMotorcycle(Motorcycle motorcycle) {
+
+        return motorcycleRepository.save(motorcycle);
+    }
+
+
     public List<Motorcycle> searchMotorcycles(String brand, String name, Integer year, Double price,
                                               String availability, Integer milage, String usedState, String type) {
 
         List<Motorcycle> filteredList = super.searchVehicles(brand, name, year, price, availability, milage, usedState);
+        System.out.println(filteredList);
 
-        return filteredList.stream()
-                .filter(Motorcycle -> Motorcycle.getMotorcycleType().equalsIgnoreCase(type))
-                .collect(Collectors.toList());
+        if (type != null) {
+            filteredList.stream()
+                    .filter(Motorcycle -> Motorcycle.getMotorcycleType().equalsIgnoreCase(type))
+                    .collect(Collectors.toList());
+        }
+
+        return filteredList;
     }
 }

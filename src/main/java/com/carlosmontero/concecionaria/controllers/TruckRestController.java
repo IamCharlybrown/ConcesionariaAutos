@@ -1,8 +1,9 @@
 package com.carlosmontero.concecionaria.controllers;
 
 import com.carlosmontero.concecionaria.models.OtherVehiclesModels.Truck;
-import com.carlosmontero.concecionaria.services.OtherVehicleServices.TruckServices;
+import com.carlosmontero.concecionaria.services.OtherVehicleServices.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -17,7 +18,7 @@ import java.util.List;
 public class TruckRestController {
 
     @Autowired
-    private TruckServices truckServices;
+    private TruckService truckServices;
 
     @GetMapping
     public List<Truck> truckList() {
@@ -47,9 +48,10 @@ public class TruckRestController {
 
     }
 
-    @PostMapping("/add")
-    public void addTrucks() {
+    @PostMapping
+    public ResponseEntity<Truck> createTruck(@RequestBody Truck truck) {
 
-        System.out.println("Agregadas correctamente");
+        truckServices.createTruck(truck);
+        return ResponseEntity.ok(truck);
     }
 }

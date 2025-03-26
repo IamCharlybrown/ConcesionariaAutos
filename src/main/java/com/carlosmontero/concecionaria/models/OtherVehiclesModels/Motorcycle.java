@@ -1,27 +1,27 @@
 package com.carlosmontero.concecionaria.models.OtherVehiclesModels;
 
 import com.carlosmontero.concecionaria.models.MasterVehicleModel.Vehicle;
-import com.carlosmontero.concecionaria.utils.Availability;
-import com.carlosmontero.concecionaria.utils.MotorcycleType;
-import com.carlosmontero.concecionaria.utils.UsedState;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.carlosmontero.concecionaria.utils.enums.Availability;
+import com.carlosmontero.concecionaria.utils.enums.MotorcycleType;
+import com.carlosmontero.concecionaria.utils.enums.UsedState;
+import jakarta.persistence.*;
+
 
 @Entity
 @Table(name = "motorcycles")
 public class Motorcycle extends Vehicle {
 
+
     @Column(name = "motorcyle_type")
     private MotorcycleType motorcycleType;
 
-    public Motorcycle(){
+    public Motorcycle() {
         super();
     }
 
-    public Motorcycle(MotorcycleType MotorcycleType) {
+    public Motorcycle(MotorcycleType motorcycleType) {
         super();
-        this.motorcycleType = MotorcycleType;
+        this.motorcycleType = motorcycleType;
     }
 
 
@@ -53,10 +53,17 @@ public class Motorcycle extends Vehicle {
     }
 
     public String getMotorcycleType() {
-        return motorcycleType.toString();
+        if (this.motorcycleType != null) {
+
+            return motorcycleType.toString();
+        }
+        return null;
     }
 
-    public void setMotorcycleType(String MotorcycleType) {
-        MotorcycleType = this.motorcycleType.toString();
+    public void setMotorcycleType(String motorcycleType) {
+
+        if (motorcycleType != null && !motorcycleType.isEmpty()) {
+            this.motorcycleType = MotorcycleType.valueOf(motorcycleType.toUpperCase());
+        }
     }
 }
