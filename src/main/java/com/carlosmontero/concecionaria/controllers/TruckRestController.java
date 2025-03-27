@@ -64,4 +64,9 @@ public class TruckRestController {
         return ResponseEntity.of(modifiedTruck);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Truck> deleteTruck(@PathVariable Long id){
+        Optional<Truck> truck = truckServices.deleteTruck(id);
+        return ResponseEntity.of(truck);
+    }
 }

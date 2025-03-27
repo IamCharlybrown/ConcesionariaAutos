@@ -57,4 +57,9 @@ public class MotorcycleRestController {
         return ResponseEntity.of(modifiedMotorcycle);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Motorcycle> deleteMotorcycle(@PathVariable Long id){
+        Optional<Motorcycle> motorcycle = motorcycleService.deleteMotorcycle(id);
+        return ResponseEntity.of(motorcycle);
+    }
 }

@@ -75,4 +75,10 @@ public class MotorcycleService extends VehicleServiceImpl<Motorcycle, Motorcycle
             return motorcycleRepository.save(motorcycle);
         });
     }
+
+    public Optional<Motorcycle> deleteMotorcycle(Long id){
+       Optional<Motorcycle> motorcycle = motorcycleRepository.findById(id);
+       motorcycle.ifPresent(motorcycleRepository::delete);
+       return motorcycle;
+    }
 }

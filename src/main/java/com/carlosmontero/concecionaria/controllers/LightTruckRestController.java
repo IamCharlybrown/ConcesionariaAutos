@@ -37,4 +37,9 @@ public class LightTruckRestController {
        return ResponseEntity.of(modifiedLightTruck);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<LightTruck> deleteLightTruck(@PathVariable Long id){
+        Optional<LightTruck> deletedLightTruck = lightTruckService.deleteTruck(id);
+        return ResponseEntity.of(deletedLightTruck);
+    }
 }

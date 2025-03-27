@@ -3,6 +3,7 @@ package com.carlosmontero.concecionaria.controllers;
 import com.carlosmontero.concecionaria.models.MasterVehicleModel.Vehicle;
 import com.carlosmontero.concecionaria.models.OtherVehiclesModels.Car;
 import com.carlosmontero.concecionaria.services.OtherVehicleServices.CarServices;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,6 +55,12 @@ public class CarRestController {
     public ResponseEntity<Car> modifyCar(@PathVariable Long id, @RequestBody Car car){
         Optional<Car> modifiedCar = carService.updateCar(id,car);
         return ResponseEntity.of(modifiedCar);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Car> deleteCar(@PathVariable Long id){
+       Optional<Car> deletedCar = carService.deleteCar(id);
+       return ResponseEntity.of(deletedCar);
     }
 
 }

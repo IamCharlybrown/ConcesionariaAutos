@@ -74,5 +74,10 @@ public class CarServices extends VehicleServiceImpl<Car, CarRepository> {
         });
     }
 
+    public Optional<Car> deleteCar(Long id){
+        Optional<Car> car = carRepository.findById(id);
+        car.ifPresent(carRepository::delete);
+        return car;
+    }
 
 }

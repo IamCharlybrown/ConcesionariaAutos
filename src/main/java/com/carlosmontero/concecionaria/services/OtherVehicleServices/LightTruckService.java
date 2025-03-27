@@ -44,4 +44,10 @@ public class LightTruckService extends VehicleServiceImpl<LightTruck, LightTruck
             return lightTruckRepository.save(lightTruck);
         });
     }
+
+    public Optional<LightTruck> deleteTruck(Long id){
+       Optional<LightTruck> lightTruck = lightTruckRepository.findById(id);
+       lightTruck.ifPresent(lightTruckRepository::delete);
+       return lightTruck;
+    }
 }

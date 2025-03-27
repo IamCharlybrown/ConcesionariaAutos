@@ -96,5 +96,11 @@ public class TruckService extends VehicleServiceImpl<Truck, TruckRepository> {
             return truckRepository.save(truck);
         });
     }
+
+    public Optional<Truck> deleteTruck(Long id){
+        Optional<Truck> truck = truckRepository.findById(id);
+        truck.ifPresent(truckRepository::delete);
+        return truck;
+    }
 }
 
